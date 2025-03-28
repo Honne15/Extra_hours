@@ -1,5 +1,6 @@
 import Header from "../components/Header";
 import Table from "../components/Table"
+import Footer from "../components/Footer"
 
 const ExtraHour = () => {
     return (
@@ -14,6 +15,9 @@ const ExtraHour = () => {
           <main>
             <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
                 <Table></Table>
+            </div>
+            <div class="fixed bottom-0 w-full">
+              <Footer></Footer>
             </div>
           </main>
         </div>

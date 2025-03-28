@@ -1,3 +1,4 @@
+import Footer from "../components/Footer";
 import { useState } from "react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { NavLink } from "react-router-dom";
@@ -179,7 +180,9 @@ const Dashboard = () => {
           </div>
         </main>
       </div>
-      <br></br>
+      <div>
+        <Footer></Footer>
+      </div>
     </>
   );
 };
