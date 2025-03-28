@@ -1,4 +1,15 @@
+import { useState } from "react";
+
 const Table = () => {
+  const [bgColor, setBgColor] = useState("white");
+  const [textColor, setTextColor] = useState("black"); 
+
+  const handleChange = (event) => {
+    const selectedOption = event.target.selectedOptions[0];
+    setBgColor(selectedOption.style.backgroundColor); 
+    setTextColor(selectedOption.style.color); 
+  };
+
   return (
     <div class="w-full overflow-x-auto">
       <table class="w-full text-sm">
@@ -25,11 +36,21 @@ const Table = () => {
             <td class="flex justify-center items-center shadow-md border-r border-gray-200">2025-03-27</td>
             <td class="flex justify-center items-center shadow-md border-r border-gray-200">Hora diurna: 6:00am - 8:00am</td>
             <td class="flex justify-center items-center shadow-md border-r border-gray-200">
-              <select class="border rounded-sm">
-                <option value="Aprobado" class="">Estado</option>
-                <option value="Aprobado" class="text-green-700 bg-green-200">Aprobado</option>
-                <option value="Rechazado" class="text-red-700 bg-red-200">Rechazado</option>
-                <option value="Pendiente" class="text-gray-700 bg-gray-200">Pendiente</option>
+              <select class="rounded-sm px-2 py-1" onChange={handleChange}
+                style={{
+                  backgroundColor: bgColor,
+                  color: textColor,
+                }}>
+                <option value="Estado" style={{ color: "black", backgroundColor: "white"}}>Estado</option>
+                <option value="Aprobado" style={{ color: "green", backgroundColor: "#E6F9EB" }}>
+                  Aprobado
+                </option>
+                <option value="Rechazado" style={{ color: "red", backgroundColor: "#FCE8E6" }}>
+                  Rechazado
+                </option>
+                <option value="Pendiente" style={{ color: "#4A4A4A", backgroundColor: "#F1F1F1" }}>
+                  Pendiente
+                </option>
               </select>
             </td>
             <td class="flex justify-center items-center">
