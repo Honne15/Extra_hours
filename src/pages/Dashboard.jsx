@@ -87,7 +87,7 @@ const Dashboard = () => {
 
           {/* Sección de Servicios */}
           <div className="container mx-auto px-4 mt-12">
-            <h2 className="text-center text-2xl font-bold mb-4 text-blue-800 bg-blue-50 p-4 rounded-lg shadow-md">
+            <h2 className="text-center text-2xl font-bold mb-4 text-[#041148] bg-[#bcd3fa] p-4 rounded-lg shadow-md">
               Nuestros servicios:
             </h2>
             <div className="grid grid-cols-3 gap-4">
@@ -100,7 +100,7 @@ const Dashboard = () => {
                     className="w-full h-32 object-cover"
                   />
                 </div>
-                <h3 className="font-bold mb-2 text-blue-800">
+                <h3 className="font-bold mb-2 text-[#041148]">
                   Registro de Horas
                 </h3>
                 <p className="text-gray-600 text-sm">
@@ -118,7 +118,7 @@ const Dashboard = () => {
                     className="w-full h-32 object-cover"
                   />
                 </div>
-                <h3 className="font-bold mb-2 text-blue-800">
+                <h3 className="font-bold mb-2 text-[#041148]">
                   Cálculo Automático
                 </h3>
                 <p className="text-gray-600 text-sm">
@@ -136,7 +136,7 @@ const Dashboard = () => {
                     className="w-full h-32 object-cover"
                   />
                 </div>
-                <h3 className="font-bold mb-2 text-blue-800">
+                <h3 className="font-bold mb-2 text-[#041148]">
                   Información de los empleados
                 </h3>
                 <p className="text-gray-600 text-sm">
@@ -149,13 +149,13 @@ const Dashboard = () => {
 
           {/* Sección de Características de la Plataforma */}
           <div className="container mx-auto px-4 mt-12">
-            <h2 className="text-center text-2xl font-bold mb-4 text-blue-800 bg-blue-50 p-4 rounded-lg shadow-md">
+            <h2 className="text-center text-2xl font-bold mb-4 text-[#041148] bg-[#bcd3fa] p-4 rounded-lg shadow-md">
               En nuestra plataforma encontrarás:
             </h2>
-            <div className="grid grid-cols-2 gap-4 bg-blue-50 p-4 rounded-lg">
+            <div className="grid grid-cols-2 gap-4 bg-[#bcd3fa] p-4 rounded-lg">
               {/* Eficiencia */}
               <div className="bg-white rounded-lg p-6 shadow-md hover:shadow-lg transition-shadow duration-300">
-                <h3 className="text-xl font-bold mb-4 text-blue-800">
+                <h3 className="text-xl font-bold mb-4 text-[#041148]">
                   Eficiencia
                 </h3>
                 <p className="text-gray-600">
@@ -167,7 +167,7 @@ const Dashboard = () => {
 
               {/* Transparencia */}
               <div className="bg-white rounded-lg p-6 shadow-md hover:shadow-lg transition-shadow duration-300">
-                <h3 className="text-xl font-bold mb-4 text-blue-800">
+                <h3 className="text-xl font-bold mb-4 text-[#041148]">
                   Transparencia
                 </h3>
                 <p className="text-gray-600">

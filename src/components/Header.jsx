@@ -26,7 +26,6 @@ const Header = () => {
     <Disclosure as="nav" className="bg-[url('/banner.jpg')] bg-cover bg-center">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
-          {/* Logo */}
           <div className="flex items-center">
             <div className="shrink-0">
               <img
