@@ -16,6 +16,7 @@
     "@tailwindcss/vite": "^4.0.14",
     "amadeus-dashboard": "file:",
     "autoprefixer": "^10.4.21",
+    "axios": "^1.8.4",
     "heroicons": "^2.2.0",
     "lucide-react": "^0.484.0",
     "postcss": "^8.5.3",
