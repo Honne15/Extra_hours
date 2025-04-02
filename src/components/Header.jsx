@@ -8,6 +8,7 @@ import { NavLink } from "react-router-dom";
 const navigation = [
   { name: "Inicio", href: "/dashboard" },
   { name: "Horas extras", href: "/extrahours" },
+  { name: "Trabajadores", href: "/profile" },
   { name: "ProbarConexion", href: "/probarconexion" },
   { name: "Salir", href: "/login" },
 ];
