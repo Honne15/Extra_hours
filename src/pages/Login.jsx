@@ -1,14 +1,34 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import { useDispatch, useSelector } from "react-redux";
+import { loginUser } from "../store/authSlice";
+
+const schema = yup.object({
+  email: yup.string().required("El correo es requerido."),
+  password: yup.string().required("El password es requerido."),
+}).required();
 
 const Login = () => {
   const navigate = useNavigate();
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
+  const { loading, error, token } = useSelector((state) => state.auth);
+  const [rememberMe, setRememberMe] = useState(false);
 
-  const handleLogin = (e) => {
-    e.preventDefault();
-    navigate("/dashboard");
+  const { register, handleSubmit, formState: { errors } } = useForm({
+    resolver: yupResolver(schema),
+  });
+
+  useEffect(() => {
+    if (token) {
+      navigate("/dashboard");
+    }
+  }, [token, navigate]);
+
+  const onSubmit = (data) => {
+    dispatch(loginUser(data));
   };
 
   return (
@@ -33,40 +53,54 @@ const Login = () => {
           <h2 className="text-2xl font-bold mb-6 text-[#0177bd] text-center">
             INICIO DE SESIÓN
           </h2>
-          <form onSubmit={handleLogin}>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <div className="mb-4">
               <label className="block text-[#101851] font-medium mb-1">
-                Usuario
+                Correo *
               </label>
               <input
                 type="text"
-                className="w-full border-2 border-[#bcd3fa] rounded-lg p-2"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                className={
+                  errors.email
+                    ? "w-full border-2 border-red-500 rounded-lg p-2"
+                    : "w-full border-2 border-[#bcd3fa] rounded-lg p-2"
+                }
+                {...register("email")}
               />
+              <p className="text-red-500 text-sm mt-1">{errors.email?.message}</p>
             </div>
             <div className="mb-4">
               <label className="block text-[#101851] font-medium mb-1">
-                Contraseña
+                Contraseña *
               </label>
               <input
                 type="password"
-                className="w-full border-2 border-[#bcd3fa] rounded-lg p-2"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                className={
+                  errors.password
+                    ? "w-full border-2 border-red-500 rounded-lg p-2"
+                    : "w-full border-2 border-[#bcd3fa] rounded-lg p-2"
+                }
+                {...register("password")}
               />
+              <p className="text-red-500 text-sm mt-1">{errors.password?.message}</p>
+            </div>
+            <div className="mb-4 flex items-center">
+              <input
+                type="checkbox"
+                className="mr-2"
+                checked={rememberMe}
+                onChange={() => setRememberMe(!rememberMe)}
+              />
+              <span className="text-gray-700">Recuérdame</span>
             </div>
             <button
               type="submit"
               className="w-full bg-[#0177bd] text-white p-3 rounded-lg hover:bg-blue-400 font-bold"
+              disabled={loading}
             >
-              INICIAR
+              {loading ? <span className="spinner"></span> : "INICIAR"}
             </button>
-            <p className="text-gray-700 text-center mt-4">
-              <a href="#" className="text-[#005eb8] underline">
-                Recuperar contraseña
-              </a>
-            </p>
+            {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
           </form>
         </div>
       </div>
