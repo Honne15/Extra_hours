@@ -1,8 +1,6 @@
 import { useState } from "react";
 import {
   Disclosure,
-  DisclosureButton,
-  DisclosurePanel,
 } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { NavLink } from "react-router-dom";
@@ -10,6 +8,8 @@ import { NavLink } from "react-router-dom";
 const navigation = [
   { name: "Inicio", href: "/dashboard" },
   { name: "Horas extras", href: "/extrahours" },
+  { name: "Trabajadores", href: "/profile" },
+  { name: "Salir", href: "/login" },
 ];
 
 function classNames(...classes) {
@@ -27,7 +27,6 @@ const Header = () => {
     <Disclosure as="nav" className="bg-[url('/banner.jpg')] bg-cover bg-center">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
-          {/* Logo */}
           <div className="flex items-center">
             <div className="shrink-0">
               <img
@@ -48,7 +47,7 @@ const Header = () => {
           </div>
 
           {isOpen && (
-            <div className="absolute top-16 right-4 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 p-2">
+            <div className="absolute top-16 right-4 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 p-2 z-50">
               {navigation.map((item) => (
                 <NavLink
                   key={item.name}

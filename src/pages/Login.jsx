@@ -1,79 +1,111 @@
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { yupResolver } from '@hookform/resolvers/yup';
+import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { useDispatch, useSelector } from "react-redux";
+import { loginUser } from "../store/authSlice";
 
 const schema = yup.object({
-  username: yup.string().required("El username es requerido."),
+  email: yup.string().required("El correo es requerido."),
   password: yup.string().required("El password es requerido."),
 }).required();
 
 const Login = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { loading, error, token } = useSelector((state) => state.auth);
   const [rememberMe, setRememberMe] = useState(false);
 
-  const { register, handleSubmit, formState:{ errors } } = useForm({
-    resolver: yupResolver(schema)
+  const { register, handleSubmit, formState: { errors } } = useForm({
+    resolver: yupResolver(schema),
   });
-  const onSubmit = data => {
-    console.log(data);
-    navigate("/dashboard")
-  }
+
+  useEffect(() => {
+    if (token) {
+      navigate("/dashboard");
+    }
+  }, [token, navigate]);
+
+  const onSubmit = (data) => {
+    dispatch(loginUser(data));
+  };
 
   return (
     <div className="flex h-screen">
-    <div className="w-1/2 bg-gradient-to-br from-blue-900 to-blue-600 flex items-center justify-center">
-      <div className="text-white text-center">
-        <h1 className="text-3xl font-bold mb-4">AMADEUS SELLING PLATFORM CONNECT</h1>
+      <div className="absolute top-0 left-0 w-[60%] h-full overflow-hidden">
+        <div
+          className="w-full h-full bg-cover bg-center"
+          style={{
+            backgroundImage: "url('/images/Imagen.jpg')",
+            clipPath: "polygon(0% 0%, 100% 0%, 70% 100%, 0% 100%)",
+          }}
+        ></div>
+        <img
+          src="/public/images/logoAmadeus.png"
+          alt="logo"
+          className="absolute top-6 left-6 w-40 z-20"
+        />
       </div>
-    </div>
-    <div className="w-1/2 flex items-center justify-center">
-      <div className="w-full max-w-md p-8 rounded-lg">
-        <h2 className="text-2xl font-bold mb-6">Inicio de sesión</h2>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="mb-4">
-            <label className="block text-gray-700 font-medium mb-1">Nombre de usuario *</label>
-            <input
-              type="text"
-              className={
-                errors.username ? "w-full p-2 border border-red-500 focus:ring-red-500 rounded" : "w-full p-2 border border-gray-300 rounded"
-              }
-              {...register("username")} 
-            />
-            <p className='text-red-500 text-sm mt-1'>{errors.username?.message}</p>
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-700 font-medium mb-1">Contraseña *</label>
-            <input
-              type="password"
-              className={
-                errors.password ? "w-full p-2 border border-red-500 focus:ring-red-500 rounded" : "w-full p-2 border border-gray-300 rounded"
-              }
-              {...register("password")} 
-            />
-            <p className='text-red-500 text-sm mt-1'>{errors.password?.message}</p>
-          </div>
-          <div className="mb-4 flex items-center">
-            <input
-              type="checkbox"
-              className="mr-2"
-              checked={rememberMe}
-              onChange={() => setRememberMe(!rememberMe)}
-            />
-            <span className="text-gray-700">Recuérdame</span>
-          </div>
-          <button
-            type="submit"
-            className="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700"
-          >
-            Inicio de sesión
-          </button>
-        </form>
-      </div>
-    </div>
-  </div>
-  )
-}
 
-export default Login
+      <div className="w-full md:w-[40%] flex items-center justify-center ml-auto">
+        <div className="max-w-md rounded-2xl bg-white p-8 shadow-lg w-96 z-10 relative border-3 border-[#bcd3fa] mr-10">
+          <h2 className="text-2xl font-bold mb-6 text-[#0177bd] text-center">
+            INICIO DE SESIÓN
+          </h2>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div className="mb-4">
+              <label className="block text-[#101851] font-medium mb-1">
+                Correo *
+              </label>
+              <input
+                type="text"
+                className={
+                  errors.email
+                    ? "w-full border-2 border-red-500 rounded-lg p-2"
+                    : "w-full border-2 border-[#bcd3fa] rounded-lg p-2"
+                }
+                {...register("email")}
+              />
+              <p className="text-red-500 text-sm mt-1">{errors.email?.message}</p>
+            </div>
+            <div className="mb-4">
+              <label className="block text-[#101851] font-medium mb-1">
+                Contraseña *
+              </label>
+              <input
+                type="password"
+                className={
+                  errors.password
+                    ? "w-full border-2 border-red-500 rounded-lg p-2"
+                    : "w-full border-2 border-[#bcd3fa] rounded-lg p-2"
+                }
+                {...register("password")}
+              />
+              <p className="text-red-500 text-sm mt-1">{errors.password?.message}</p>
+            </div>
+            <div className="mb-4 flex items-center">
+              <input
+                type="checkbox"
+                className="mr-2"
+                checked={rememberMe}
+                onChange={() => setRememberMe(!rememberMe)}
+              />
+              <span className="text-gray-700">Recuérdame</span>
+            </div>
+            <button
+              type="submit"
+              className="w-full bg-[#0177bd] text-white p-3 rounded-lg hover:bg-blue-400 font-bold"
+              disabled={loading}
+            >
+              {loading ? <span className="spinner"></span> : "INICIAR"}
+            </button>
+            {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
+          </form>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Login;
