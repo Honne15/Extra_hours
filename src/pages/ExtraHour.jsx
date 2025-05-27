@@ -5,6 +5,7 @@ import Footer from "../components/Footer";
 
 const ExtraHour = () => {
   const [extraHours, setExtraHours] = useState([]);
+  const [refreshTrigger, setRefreshTrigger] = useState(false);
 
   useEffect(() => {
     const fetchExtraHours = async () => {
@@ -17,7 +18,7 @@ const ExtraHour = () => {
       }
     };
     fetchExtraHours();
-  }, []);
+  }, [refreshTrigger]);
 
   return (
     <>
@@ -32,7 +33,7 @@ const ExtraHour = () => {
         </header>
         <main class="flex-grow">
           <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-            <Table extraHours={extraHours}></Table>
+            <Table extraHours={extraHours.filter((h) => h.status === "Pendiente")} onStatusChange={setRefreshTrigger} />
           </div>
         </main>
         <Footer></Footer>

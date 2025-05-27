@@ -4,11 +4,8 @@ import Footer from "../components/Footer";
 import TableEmployee from "../components/TableEmployee";
 import {
   FaSearch,
-  FaCamera,
-  FaTrash,
   FaTimes,
   FaPlus,
-  FaExclamationCircle,
 } from "react-icons/fa";
 
 const Profile = () => {

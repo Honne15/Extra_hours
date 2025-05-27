@@ -3,6 +3,7 @@ import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import ExtraHour from "./pages/ExtraHour";
 import Profile from "./pages/Profile";
+import Record from "./pages/Record";
 import ProtectedRoute from "./routes/ProtectedRoute";
 
 const App = () => {
@@ -15,6 +16,7 @@ const App = () => {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/extrahours" element={<ExtraHour />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/record" element={<Record />} />
       </Routes>
     </Router>
   )
