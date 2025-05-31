@@ -79,7 +79,7 @@ const Table = ({ extraHours, onStatusChange }) => {
                     {extraHour.date}
                   </td>
                   <td class="flex justify-center items-center shadow-md border-r border-gray-200">
-                    {extraHour.startTime}-{extraHour.endTime}
+                    {extraHour.startTime} a {extraHour.endTime}
                   </td>
                   <td class="flex justify-center items-center shadow-md border-r border-gray-200">
                     <select
@@ -127,7 +127,7 @@ const Table = ({ extraHours, onStatusChange }) => {
               </p>
               <p className="truncate">
                 <span className="font-bold">Horas extras:</span>{" "}
-                {extraHour.startTime}-{extraHour.endTime}
+                {extraHour.startTime} a {extraHour.endTime}
               </p>
               <p className="truncate">
                 <span className="font-bold">Estado:</span>
