@@ -228,7 +228,7 @@ const Profile = () => {
                         name="name"
                         value={newEmployee.name}
                         onChange={handleCreateInputChange}
-                        className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
                         required
                       />
                     </div>
@@ -241,7 +241,7 @@ const Profile = () => {
                         name="phoneNumber"
                         value={newEmployee.phoneNumber}
                         onChange={handleCreateInputChange}
-                        className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
                         required
                       />
                     </div>
@@ -254,7 +254,7 @@ const Profile = () => {
                         name="email"
                         value={newEmployee.email}
                         onChange={handleCreateInputChange}
-                        className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
                         required
                       />
                     </div>
