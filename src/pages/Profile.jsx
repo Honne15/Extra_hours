@@ -7,6 +7,7 @@ import {
   FaTimes,
   FaPlus,
 } from "react-icons/fa";
+import { set } from "react-hook-form";
 
 const Profile = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -15,6 +16,7 @@ const Profile = () => {
   const [isNotFoundVisible, setIsNotFoundVisible] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [employees, setEmployees] = useState([]);
+  const [filteredEmployees, setFilteredEmployees] = useState([]);
   const [currentEmployee, setCurrentEmployee] = useState({
     id: null,
     name: "",
@@ -124,43 +126,52 @@ const Profile = () => {
   };
 
   const handleSearch = async (e) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
+  if (e.key === "Enter") {
+    e.preventDefault();
 
-      const trimmedQuery = searchQuery.trim();
+    const searchQuery = e.target.value;
 
-      if (trimmedQuery === "") return;
+    setSearchQuery(searchQuery);
+    if (searchQuery.trim() === "") {
+      setIsNotFoundVisible(false);
+      setFilteredEmployees([]);
+      return;
+    }
 
-      try {
-        const response = await fetch(
-          `http://localhost:5011/api/users/search/${trimmedQuery}`
-        );
-
-        if (!response.ok) {
-          throw new Error("Error al buscar el empleado");
+    try {
+      const response = await fetch(
+        `http://localhost:5011/api/users/search/${encodeURIComponent(searchQuery)}`,
+        {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
         }
+      );
 
-        const foundEmployee = await response.json();
+      if (!response.ok) {
+        throw new Error("Error al buscar el empleado");
+      }
 
-        if (foundEmployee) {
-          setCurrentEmployee(foundEmployee);
-          setPreviewImage(foundEmployee.imagen);
-          setIsNotFoundVisible(false);
-        } else {
-          setIsNotFoundVisible(true);
-          setTimeout(() => {
-            setIsNotFoundVisible(false);
-          }, 3000);
-        }
-      } catch (error) {
-        console.error("Error en la búsqueda:", error);
+      const foundEmployee = await response.json();
+
+      if (foundEmployee) {
+        setFilteredEmployees([foundEmployee]);
+        setIsNotFoundVisible(false);
+      } else {
         setIsNotFoundVisible(true);
         setTimeout(() => {
           setIsNotFoundVisible(false);
         }, 3000);
       }
+    } catch (error) {
+      console.error("Error en la búsqueda:", error);
+      setIsNotFoundVisible(true);
+      setTimeout(() => {
+        setIsNotFoundVisible(false);
+      }, 3000);
     }
-  };
+  }
+};
+
 
   return (
     <>
@@ -198,7 +209,7 @@ const Profile = () => {
 
           {/* Contenido principal */}
           <div className="flex flex-col md:flex-row gap-6">
-            <TableEmployee employees={employees}></TableEmployee>
+            <TableEmployee employees={employees} filteredEmployees={filteredEmployees}></TableEmployee>
           </div>
 
           {/* Modal de creación de empleado */}

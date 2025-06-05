@@ -1,4 +1,7 @@
-const TableEmployee = ({ employees }) => {
+const TableEmployee = ({ employees, filteredEmployees }) => {
+
+  const employeeList = filteredEmployees?.length > 0 ? filteredEmployees : employees;
+
   return (
     <div className="w-full max-w-4xl mx-auto px-2">
       <div className="hidden md:block">
@@ -12,7 +15,7 @@ const TableEmployee = ({ employees }) => {
             </tr>
           </thead>
           <tbody> 
-            {employees?.map((employee) => (
+            {employeeList?.map((employee) => (
               <tr key={employee.id} className="grid grid-cols-4 shadow-sm gap-x-1 text-left  font-sans text-gray-800 text-[13px] tracking-wide leading-relaxed">
                 <td className="px-4 py-2 flex items-center gap-2 shadow-md border-r border-gray-200">
                   {employee.name}
@@ -34,7 +37,7 @@ const TableEmployee = ({ employees }) => {
 
       {/* Vista tipo tarjeta (solo visible en pantallas pequeñas) */}
 <div className="flex md:hidden flex-wrap justify-center items-start gap-4">
-  {employees?.map((employee) => (
+  {employeeList?.map((employee) => (
     <div
       key={employee.id}
       className="bg-white rounded-lg shadow-md p-5 border border-gray-200 
