@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Header from "../components/Header";
 import Table from "../components/Table";
 import Footer from "../components/Footer";
+import Report from "../components/Report";
 import { FaSearch } from "react-icons/fa";
 
 const Record = () => {
@@ -35,6 +36,10 @@ const Record = () => {
         </div>
       </header>
       <main className="flex-grow">
+
+        <div className="sm:px-6 lg:px-8 mt-3 flex justify-end">
+          <Report />
+        </div>
 
         <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
           <Table extraHours={filteredHours}  />
