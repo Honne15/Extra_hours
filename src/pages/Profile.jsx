@@ -2,11 +2,7 @@ import React, { useState, useEffect } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import TableEmployee from "../components/TableEmployee";
-import {
-  FaSearch,
-  FaTimes,
-  FaPlus,
-} from "react-icons/fa";
+import { FaSearch, FaTimes, FaPlus } from "react-icons/fa";
 import { set } from "react-hook-form";
 
 const Profile = () => {
@@ -128,52 +124,54 @@ const Profile = () => {
   };
 
   const handleSearch = async (e) => {
-  if (e.key === "Enter") {
-    e.preventDefault();
+    if (e.key === "Enter") {
+      e.preventDefault();
 
-    const searchQuery = e.target.value;
+      const searchQuery = e.target.value;
 
-    setSearchQuery(searchQuery);
-    if (searchQuery.trim() === "") {
-      setIsNotFoundVisible(false);
-      setFilteredEmployees([]);
-      return;
-    }
-
-    try {
-      const response = await fetch(
-        `http://localhost:5011/api/users/search/${encodeURIComponent(searchQuery)}`,
-        {
-          method: "GET",
-          headers: { "Content-Type": "application/json" },
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error("Error al buscar el empleado");
+      setSearchQuery(searchQuery);
+      if (searchQuery.trim() === "") {
+        setIsNotFoundVisible(false);
+        setFilteredEmployees([]);
+        return;
       }
 
-      const foundEmployee = await response.json();
+      try {
+        const response = await fetch(
+          `http://localhost:5011/api/users/search/${encodeURIComponent(
+            searchQuery
+          )}`,
+          {
+            method: "GET",
+            headers: { "Content-Type": "application/json" },
+          }
+        );
 
-      if (foundEmployee) {
-        setFilteredEmployees([foundEmployee]);
-        setIsNotFoundVisible(false);
-      } else {
+        if (!response.ok) {
+          throw new Error("Error al buscar el empleado");
+        }
+
+        const foundEmployees = await response.json();
+
+        if (foundEmployees.length > 0) {
+          setFilteredEmployees(foundEmployees);
+          setIsNotFoundVisible(false);
+        } else {
+          setFilteredEmployees([]);
+          setIsNotFoundVisible(true);
+          setTimeout(() => {
+            setIsNotFoundVisible(false);
+          }, 3000);
+        }
+      } catch (error) {
+        console.error("Error en la búsqueda:", error);
         setIsNotFoundVisible(true);
         setTimeout(() => {
           setIsNotFoundVisible(false);
         }, 3000);
       }
-    } catch (error) {
-      console.error("Error en la búsqueda:", error);
-      setIsNotFoundVisible(true);
-      setTimeout(() => {
-        setIsNotFoundVisible(false);
-      }, 3000);
     }
-  }
-};
-
+  };
 
   return (
     <>
@@ -211,7 +209,10 @@ const Profile = () => {
 
           {/* Contenido principal */}
           <div className="flex flex-col md:flex-row gap-6">
-            <TableEmployee employees={employees} filteredEmployees={filteredEmployees}></TableEmployee>
+            <TableEmployee
+              employees={employees}
+              filteredEmployees={filteredEmployees}
+            ></TableEmployee>
           </div>
 
           {/* Modal de creación de empleado */}
