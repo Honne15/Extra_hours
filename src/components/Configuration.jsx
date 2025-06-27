@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { GoGear } from "react-icons/go";
-import { FaTimes, FaPlus } from "react-icons/fa";
+import { FaTimes } from "react-icons/fa";
 
 const Configuration = () => {
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
@@ -22,7 +22,9 @@ const Configuration = () => {
       .then((data) => {
         setSetting(data.setting[0]);
         setExtraHourType(data.extraHourType || []);
-        setExtraHourTypeSelected(data.extraHourTypeSelected[0]?.typeHourName || "");
+        setExtraHourTypeSelected(
+          data.extraHourTypeSelected[0]?.typeHourName || ""
+        );
       });
   }, []);
 
@@ -40,25 +42,24 @@ const Configuration = () => {
 
   const saveConfiguracion = () => {
     fetch("http://localhost:5011/api/extraHourSettings/update-settings", {
-  method: "PUT",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({ ExtraHourTypes: extraHourType, Setting: setting }),
-})
-  .then(async (res) => {
-    const text = await res.text();
-    if (res.ok) {
-      alert("Configuración actualizada correctamente");
-    } else {
-      console.error("Error:", text);
-      alert("Error al guardar: " + text);
-    }
-  })
-  .catch((err) => {
-    console.error("Fetch error:", err);
-    alert("Error de conexión con el servidor");
-  });
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ ExtraHourTypes: extraHourType, Setting: setting }),
+    })
+      .then(async (res) => {
+        const text = await res.text();
+        if (res.ok) {
+          console.log("Configuración guardada:", text);
+          handleCloseCreateModal();
+        } else {
+          console.error("Error:", text);
+        }
+      })
+      .catch((err) => {
+        console.error("Fetch error:", err);
+        alert("Error de conexión con el servidor");
+      });
   };
-
 
   const currentType = extraHourType.find(
     (t) => t.typeHourName === extraHourTypeSelected
@@ -121,7 +122,7 @@ const Configuration = () => {
               {currentType && (
                 <div className="mb-6 border border-gray-300 p-4 rounded bg-gray-100">
                   <h3 className="font-semibold mb-2">
-                    Configuración de Hora Extra {" "}
+                    Configuración de Hora Extra{" "}
                     {extraHourTypeSelected.charAt(0).toUpperCase() +
                       extraHourTypeSelected.slice(1)}
                   </h3>
@@ -165,7 +166,9 @@ const Configuration = () => {
               )}
 
               <div className="mb-6 border border-gray-300 p-4 rounded bg-gray-100">
-                <h3 className="font-semibold mb-2">Configuraciones generales</h3>
+                <h3 className="font-semibold mb-2">
+                  Configuraciones generales
+                </h3>
 
                 <div className="mb-3">
                   <label className="block mb-1">
@@ -219,6 +222,7 @@ const Configuration = () => {
               </button>
 
               <button
+                type="submit"
                 className="bg-blue-200 text-blue-900 px-6 py-2 rounded-md hover:bg-blue-300 transition-colors flex items-center gap-2 whitespace-nowrap justify-center"
                 onClick={saveConfiguracion}
               >
