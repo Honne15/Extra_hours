@@ -2,11 +2,15 @@ import Footer from "../components/Footer";
 import { useState } from "react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { NavLink } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { logout } from "../store/authSlice";
+import { useNavigate } from "react-router-dom";
 
 const navigation = [
   { name: "Inicio", href: "/dashboard" },
   { name: "Horas extras", href: "/extrahours" },
-  { name: "Trabajadores", href: "/profile" },
+  { name: "Empleados", href: "/profile" },
+  { name: "Historial", href: "/record" },
   { name: "Salir", href: "/login" },
 ];
 
@@ -16,9 +20,17 @@ function classNames(...classes) {
 
 const Dashboard = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
+  };
+
+  const handleLogout = () => {
+    console.log("Logout clickeado");
+    dispatch(logout());
+    navigate("/login");
   };
 
   return (
@@ -56,23 +68,33 @@ const Dashboard = () => {
             </div>
 
             {isOpen && (
-              <div className="absolute top-16 right-4 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 p-2">
-                {navigation.map((item) => (
-                  <NavLink
-                    key={item.name}
-                    to={item.href}
-                    className={({ isActive }) =>
-                      classNames(
-                        isActive
-                          ? "bg-[#005eb8] text-white"
-                          : "hover:bg-blue-200",
-                        "block rounded-md px-3 py-2 text-lg font-medium text-gray-700"
-                      )
-                    }
-                  >
-                    {item.name}
-                  </NavLink>
-                ))}
+              <div className="absolute top-16 right-4 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 p-2 z-50">
+                {navigation.map((item) =>
+                  item.name === "Salir" ? (
+                    <button
+                      key={item.name}
+                      onClick={handleLogout}
+                      className="block w-full text-left rounded-md px-3 py-2 text-lg font-medium text-gray-700 hover:bg-blue-200"
+                    >
+                      {item.name}
+                    </button>
+                  ) : (
+                    <NavLink
+                      key={item.name}
+                      to={item.href}
+                      className={({ isActive }) =>
+                        classNames(
+                          isActive
+                            ? "bg-[#005eb8] text-white"
+                            : "hover:bg-blue-200",
+                          "block rounded-md px-3 py-2 text-lg font-medium text-gray-700"
+                        )
+                      }
+                    >
+                      {item.name}
+                    </NavLink>
+                  )
+                )}
               </div>
             )}
 

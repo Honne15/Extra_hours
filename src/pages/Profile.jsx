@@ -2,14 +2,8 @@ import React, { useState, useEffect } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import TableEmployee from "../components/TableEmployee";
-import {
-  FaSearch,
-  FaCamera,
-  FaTrash,
-  FaTimes,
-  FaPlus,
-  FaExclamationCircle,
-} from "react-icons/fa";
+import { FaSearch, FaTimes, FaPlus } from "react-icons/fa";
+import { set } from "react-hook-form";
 
 const Profile = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -18,6 +12,7 @@ const Profile = () => {
   const [isNotFoundVisible, setIsNotFoundVisible] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [employees, setEmployees] = useState([]);
+  const [filteredEmployees, setFilteredEmployees] = useState([]);
   const [currentEmployee, setCurrentEmployee] = useState({
     id: null,
     name: "",
@@ -25,6 +20,7 @@ const Profile = () => {
     phoneNumber: "",
     password: "",
     roleId: 2,
+    salary: "",
   });
   const [newEmployee, setNewEmployee] = useState({
     name: "",
@@ -32,6 +28,7 @@ const Profile = () => {
     phoneNumber: "",
     password: "",
     roleId: 2,
+    salary: "",
   });
 
   useEffect(() => {
@@ -58,14 +55,13 @@ const Profile = () => {
 
   const handleOpenCreateModal = () => {
     setIsCreateModalOpen(true);
-    setCreatePreviewImage(null);
     setNewEmployee({
       name: "",
       email: "",
       phoneNumber: "",
       password: "",
       roleId: 2,
-      imagen: null,
+      salary: "",
     });
   };
 
@@ -99,6 +95,7 @@ const Profile = () => {
       password: newEmployee.password,
       email: newEmployee.email,
       roleId: newEmployee.roleId,
+      salary: newEmployee.salary,
     };
 
     try {
@@ -130,26 +127,37 @@ const Profile = () => {
     if (e.key === "Enter") {
       e.preventDefault();
 
-      const trimmedQuery = searchQuery.trim();
+      const searchQuery = e.target.value;
 
-      if (trimmedQuery === "") return;
+      setSearchQuery(searchQuery);
+      if (searchQuery.trim() === "") {
+        setIsNotFoundVisible(false);
+        setFilteredEmployees([]);
+        return;
+      }
 
       try {
         const response = await fetch(
-          `http://localhost:5011/api/users/search/${trimmedQuery}`
+          `http://localhost:5011/api/users/search/${encodeURIComponent(
+            searchQuery
+          )}`,
+          {
+            method: "GET",
+            headers: { "Content-Type": "application/json" },
+          }
         );
 
         if (!response.ok) {
           throw new Error("Error al buscar el empleado");
         }
 
-        const foundEmployee = await response.json();
+        const foundEmployees = await response.json();
 
-        if (foundEmployee) {
-          setCurrentEmployee(foundEmployee);
-          setPreviewImage(foundEmployee.imagen);
+        if (foundEmployees.length > 0) {
+          setFilteredEmployees(foundEmployees);
           setIsNotFoundVisible(false);
         } else {
+          setFilteredEmployees([]);
           setIsNotFoundVisible(true);
           setTimeout(() => {
             setIsNotFoundVisible(false);
@@ -201,7 +209,10 @@ const Profile = () => {
 
           {/* Contenido principal */}
           <div className="flex flex-col md:flex-row gap-6">
-            <TableEmployee employees={employees}></TableEmployee>
+            <TableEmployee
+              employees={employees}
+              filteredEmployees={filteredEmployees}
+            ></TableEmployee>
           </div>
 
           {/* Modal de creación de empleado */}
@@ -231,7 +242,7 @@ const Profile = () => {
                         name="name"
                         value={newEmployee.name}
                         onChange={handleCreateInputChange}
-                        className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
                         required
                       />
                     </div>
@@ -244,7 +255,7 @@ const Profile = () => {
                         name="phoneNumber"
                         value={newEmployee.phoneNumber}
                         onChange={handleCreateInputChange}
-                        className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
                         required
                       />
                     </div>
@@ -257,7 +268,20 @@ const Profile = () => {
                         name="email"
                         value={newEmployee.email}
                         onChange={handleCreateInputChange}
-                        className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Salario
+                      </label>
+                      <input
+                        type="text"
+                        name="salary"
+                        value={newEmployee.salary}
+                        onChange={handleCreateInputChange}
+                        className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
                         required
                       />
                     </div>
