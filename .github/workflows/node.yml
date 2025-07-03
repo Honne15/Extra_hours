@@ -1,0 +1,24 @@
+name: Amadeus frontend 
+
+on:
+  push:
+      branches: ["main"]
+  pull_request:
+      branches: ["main"]
+
+jobs:
+  build:
+    runs-on: ubuntu-lastest
+
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v4
+    - name: Septup node 
+      uses: actions/setup-node@v4
+      with:    
+        node-version: 24.1.0
+
+    - name: Retore dependecies  
+      run: npm i
+    - name: Build proyect
+      run: npm run dev
