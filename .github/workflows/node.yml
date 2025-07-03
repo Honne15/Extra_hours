@@ -1,3 +1,5 @@
+# GitHub Actions workflow file for building a Node.js project
+
 name: Amadeus frontend 
 
 on:
