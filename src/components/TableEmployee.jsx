@@ -1,22 +1,31 @@
-const TableEmployee = ({ employees, filteredEmployees }) => {
+import { MdDeleteOutline } from "react-icons/md";
+
+const TableEmployee = ({ employees, filteredEmployees, onDeleteEmployee }) => {
 
   const employeeList = filteredEmployees?.length > 0 ? filteredEmployees : employees;
 
+  const handleDeleteEmployee = (id) => {
+    if (onDeleteEmployee) {
+      onDeleteEmployee(id);
+    }
+  };
+
   return (
-    <div className="w-full max-w-4xl mx-auto px-2">
+    <div className="w-full max-w-6xl mx-auto px-2">
       <div className="hidden md:block">
         <table className="w-full text-sm">
           <thead className="text-left md:text-base font-sans text-gray-800 text-lg tracking-wide leading-relaxed">
-            <tr className="grid grid-cols-4 shadow-sm gap-x-1">
+            <tr className="grid grid-cols-[2fr_2fr_3fr_2fr_1fr] shadow-sm gap-x-1">
               <th className="py-2 px-1">Nombre</th>
               <th className="py-2 px-1">Teléfono</th>
               <th className="py-2 px-1">Email</th>
               <th className="py-2 px-1">Código</th>
+              <th className="py-2 px-1"></th>
             </tr>
           </thead>
           <tbody> 
             {employeeList?.map((employee) => (
-              <tr key={employee.id} className="grid grid-cols-4 shadow-sm gap-x-1 text-left  font-sans text-gray-800 text-[13px] tracking-wide leading-relaxed">
+              <tr key={employee.id} className="grid grid-cols-[2fr_2fr_3fr_2fr_1fr] shadow-sm gap-x-1 text-left  font-sans text-gray-800 text-[13px] tracking-wide leading-relaxed">
                 <td className="px-4 py-2 flex items-center gap-2 shadow-md border-r border-gray-200">
                   {employee.name}
                 </td>
@@ -28,6 +37,11 @@ const TableEmployee = ({ employees, filteredEmployees }) => {
                 </td>
                 <td className="flex justify-center items-center shadow-md border-r border-gray-200">
                   {employee.code}
+                </td>
+                <td className="flex justify-center items-center shadow-md border-r border-gray-200">
+                  <button onClick={() => handleDeleteEmployee(employee.id)} className="bg-blue-200 text-blue-900 px-2 py-2 rounded hover:bg-blue-300 transition-colors">
+                    <MdDeleteOutline />
+                  </button>
                 </td>
               </tr>
             ))}
@@ -55,6 +69,11 @@ const TableEmployee = ({ employees, filteredEmployees }) => {
       </p>
       <p className="truncate">
         <span className="font-bold">Código:</span> {employee.code}
+      </p>
+      <p>
+        <button onClick={() => handleDeleteEmployee(employee.id)} className="bg-blue-200 text-blue-900 px-2 py-2 rounded hover:bg-blue-300 transition-colors">
+          <MdDeleteOutline />
+        </button>
       </p>
     </div>
   ))}

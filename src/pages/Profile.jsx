@@ -173,6 +173,22 @@ const Profile = () => {
     }
   };
 
+  const handleDeleteEmployee = async (id) => {
+  try {
+    const response = await fetch(`http://localhost:5011/api/users/delete/${id}`, {
+      method: 'DELETE',
+    });
+
+    if (!response.ok) {
+      throw new Error('No se pudo eliminar el empleado');
+    }
+
+    setEmployees(prev => prev.filter(emp => emp.id !== id));
+  } catch (error) {
+    console.error('Error al eliminar empleado:', error);
+  }
+};
+
   return (
     <>
       <div className="min-h-screen flex flex-col">
@@ -212,6 +228,7 @@ const Profile = () => {
             <TableEmployee
               employees={employees}
               filteredEmployees={filteredEmployees}
+              onDeleteEmployee={handleDeleteEmployee}
             ></TableEmployee>
           </div>
 
