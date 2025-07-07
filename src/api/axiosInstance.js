@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: 'http://localhost:5011'
+    baseURL: 'https://extrahoursbackend.onrender.com/'
 });
 
 api.interceptors.request.use((config)=>{
