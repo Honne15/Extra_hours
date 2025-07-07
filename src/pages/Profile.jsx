@@ -6,6 +6,7 @@ import { FaSearch, FaTimes, FaPlus } from "react-icons/fa";
 import { set } from "react-hook-form";
 
 const Profile = () => {
+  const apiUrl = import.meta.env.VITE_API_URL;
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
@@ -34,7 +35,7 @@ const Profile = () => {
   useEffect(() => {
     const fetchEmployees = async () => {
       try {
-        const response = await fetch("http://localhost:5011/api/users");
+        const response = await fetch(`${apiUrl}/api/users`);
         const data = await response.json();
         setEmployees(data);
       } catch (error) {
@@ -100,7 +101,7 @@ const Profile = () => {
 
     try {
       const response = await fetch(
-        "http://localhost:5011/api/users/userCreate",
+        `${apiUrl}/api/users/userCreate`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -138,7 +139,7 @@ const Profile = () => {
 
       try {
         const response = await fetch(
-          `http://localhost:5011/api/users/search/${encodeURIComponent(
+          `${apiUrl}/api/users/search/${encodeURIComponent(
             searchQuery
           )}`,
           {
@@ -175,7 +176,7 @@ const Profile = () => {
 
   const handleDeleteEmployee = async (id) => {
   try {
-    const response = await fetch(`http://localhost:5011/api/users/delete/${id}`, {
+    const response = await fetch(`${apiUrl}/api/users/delete/${id}`, {
       method: 'DELETE',
     });
 

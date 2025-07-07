@@ -1,10 +1,11 @@
 import { FaPlus } from "react-icons/fa";
 
 const Report = () => {
+  const apiUrl = import.meta.env.VITE_API_URL;
   const handleClick = async () => {
     try {
       const response = await fetch(
-        "http://localhost:5011/api/report/download",
+        `${apiUrl}/api/report/download`,
         {
           method: "GET",
         }

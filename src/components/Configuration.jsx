@@ -3,6 +3,7 @@ import { GoGear } from "react-icons/go";
 import { FaTimes } from "react-icons/fa";
 
 const Configuration = () => {
+  const apiUrl = import.meta.env.VITE_API_URL;
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [extraHourType, setExtraHourType] = useState([]);
   const [extraHourTypeSelected, setExtraHourTypeSelected] = useState("");
@@ -13,7 +14,7 @@ const Configuration = () => {
   });
 
   useEffect(() => {
-    fetch("http://localhost:5011/api/extraHourSettings/get-settings", {
+    fetch(`${apiUrl}/api/extraHourSettings/get-settings`, {
       headers: {
         Accept: "application/json",
       },
@@ -41,7 +42,7 @@ const Configuration = () => {
   };
 
   const saveConfiguracion = () => {
-    fetch("http://localhost:5011/api/extraHourSettings/update-settings", {
+    fetch(`${apiUrl}/api/extraHourSettings/update-settings`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ ExtraHourTypes: extraHourType, Setting: setting }),

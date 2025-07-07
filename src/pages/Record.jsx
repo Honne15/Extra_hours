@@ -6,12 +6,13 @@ import Report from "../components/Report";
 import { FaSearch } from "react-icons/fa";
 
 const Record = () => {
+  const apiUrl = import.meta.env.VITE_API_URL;
   const [extraHours, setExtraHours] = useState([]);
 
   useEffect(() => {
     const fetchExtraHours = async () => {
       try {
-        const response = await fetch("http://localhost:5011/api/hour");
+        const response = await fetch(`${apiUrl}/api/hours`);
         const data = await response.json();
         setExtraHours(data);
       } catch (error) {

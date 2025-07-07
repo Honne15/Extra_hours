@@ -4,13 +4,14 @@ import Table from "../components/Table";
 import Footer from "../components/Footer";
 
 const ExtraHour = () => {
+  const apiUrl = import.meta.env.VITE_API_URL;
   const [extraHours, setExtraHours] = useState([]);
   const [refreshTrigger, setRefreshTrigger] = useState(false);
 
   useEffect(() => {
     const fetchExtraHours = async () => {
       try {
-        const response = await fetch("http://localhost:5011/api/hour");
+        const response = await fetch(`${apiUrl}/api/hour`);
         const data = await response.json();
         setExtraHours(data);
       } catch (error) {

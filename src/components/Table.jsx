@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
 const Table = ({ extraHours, onStatusChange }) => {
+  const apiUrl = import.meta.env.VITE_API_URL;
   const [statusMap, setStatusMap] = useState({});
 
   useEffect(() => {
@@ -21,7 +22,7 @@ const Table = ({ extraHours, onStatusChange }) => {
     }));
 
     try {
-      const response = await fetch(`http://localhost:5011/api/hour/${id}`, {
+      const response = await fetch(`${apiUrl}/api/hour/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
