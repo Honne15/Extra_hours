@@ -1,4 +1,4 @@
-# Amadeus Dashboard
+# Amadeus Horas Extras
 
 ## Descripción del Proyecto
 
@@ -36,19 +36,7 @@ Amadeus Dashboard es una aplicación web desarrollada con React y Vite que permi
 - **Docker**: Contenedor para desplegar la aplicación.
 - **GitHub Actions**: Automatización de CI/CD.
 
-## Configuración del Entorno
-# React + Vite
-
-Esta plantilla proporciona una configuración mínima para que React funcione en Vite con HMR y algunas reglas de ESLint.
-
-Actualmente, hay dos complementos oficiales disponibles:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) utiliza [Babel](https://babeljs.io/) para Fast Refresh.
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) utiliza [SWC](https://swc.rs/) para Fast Refresh.
-
-## Expandiendo la configuración de ESLint
-
-Si estás desarrollando una aplicación de producción, recomendamos usar TypeScript y habilitar reglas de lint con reconocimiento de tipos. Consulta la [plantilla de TS](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) para integrar TypeScript y [`typescript-eslint`](https://typescript-eslint.io) en tu proyecto.
+# Configuración del Entorno
 
 ## Instalación
 
@@ -89,5 +77,25 @@ Si estás desarrollando una aplicación de producción, recomendamos usar TypeSc
 ## CI/CD
 El proyecto utiliza GitHub Actions para automatizar la construcción y despliegue:
 
-- Workflow: 'node.yml'
+- Workflow: [node.yml](.github/workflows/node.yml)
 - Construcción en cada `push` o `pull_request` a la rama `main`.
+## Contribución
+1. Crear un fork del repositorio.
+2. Crear una nueva rama para los cambios:
+   ```bash
+   git checkout -b feature/nueva-funcionalidad
+3. Realizar un pull request a la rama `main`.
+# React + Vite
+
+Esta plantilla proporciona una configuración mínima para que React funcione en Vite con HMR y algunas reglas de ESLint.
+
+Actualmente, hay dos complementos oficiales disponibles:
+
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) utiliza [Babel](https://babeljs.io/) para Fast Refresh.
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) utiliza [SWC](https://swc.rs/) para Fast Refresh.
+
+## Expandiendo la configuración de ESLint
+
+Si estás desarrollando una aplicación de producción, recomendamos usar TypeScript y habilitar reglas de lint con reconocimiento de tipos. Consulta la [plantilla de TS](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) para integrar TypeScript y [`typescript-eslint`](https://typescript-eslint.io) en tu proyecto.
+## Licencia
+Este proyecto está bajo la licencia de Amadeus IT Group SA. Todos los derechos reservados. ```
