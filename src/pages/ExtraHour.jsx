@@ -14,40 +14,40 @@ const ExtraHour = () => {
     fetchAllExtraHours();
   }, [refreshTrigger]);
 
-  const fetchAllExtraHours = async () => {
-    try {
-      setLoading(true);
-      const response = await fetch("http://localhost:5011/api/hour");
-      const data = await response.json();
-      setExtraHours(data);
-    } catch (error) {
-      console.error("Error al obtener todas las horas extras:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
+ const fetchAllExtraHours = async () => {
+  try {
+    setLoading(true);
+    const response = await fetch("http://localhost:5011/api/hour/summary");
+    const data = await response.json();
+    setExtraHours(data);
+  } catch (error) {
+    console.error("Error al obtener todas las horas extras:", error);
+  } finally {
+    setLoading(false);
+  }
+};
   const fetchExtraHoursByUser = async () => {
-    if (!searchUserId.trim()) {
-      alert("Por favor ingresa un ID de usuario válido.");
-      return;
-    }
+  if (!searchUserId.trim()) {
+    alert("Por favor ingresa un ID de usuario válido.");
+    return;
+  }
 
-    try {
-      setLoading(true);
-      const response = await fetch(`http://localhost:5011/api/hour/user/${searchUserId}`);
-      if (!response.ok) {
-        throw new Error("Error al obtener datos del usuario");
-      }
-      const data = await response.json();
-      setExtraHours(Array.isArray(data) ? data : [data]); // Por si la API devuelve un solo objeto
-    } catch (error) {
-      console.error("Error al obtener horas del usuario:", error);
-      alert("No se encontraron datos para ese ID.");
-    } finally {
-      setLoading(false);
+  try {
+    setLoading(true);
+    const response = await fetch(`http://localhost:5011/api/hour/summary?userId=${searchUserId}`);
+    if (!response.ok) {
+      throw new Error("Error al obtener datos del usuario");
     }
-  };
+    const data = await response.json();
+    setExtraHours(data);
+  } catch (error) {
+    console.error("Error al obtener horas del usuario:", error);
+    alert("No se encontraron datos para ese ID.");
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   return (
     <>
